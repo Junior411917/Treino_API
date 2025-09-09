@@ -1,6 +1,4 @@
-/*Criando a conexão com o banco de dados */
 
-/*Criando o pool*/
 async function connect() {
   if (global.connection) return global.connection.connect();
 
@@ -9,7 +7,6 @@ async function connect() {
     connectionString: process.env.CONNECTION_STRING,
   });
 
-  /*Conexão com o banco de dados*/
   const client = await pool.connect();
   console.log("The connection pool was created successfully!!");
 
@@ -23,15 +20,12 @@ async function connect() {
 
 connect();
 
-/*Aqui embaixo eu vou fazer o CRUD para ver se está tudo funcionando */
-/*Buscando todos os meus clientes */
 async function selectCustomers() {
   const client = await connect();
   const res = await client.query("SELECT * FROM customers");
   return res.rows;
 }
 
-/*Buscando um cliente por id */
 async function selectCustomer(id) {
   const client = await connect();
   const res = await client.query(
@@ -41,8 +35,6 @@ async function selectCustomer(id) {
   return res.rows;
 }
 
-/*Cadastrando um cliente */
-/*Obs: a função de INSERT não possui retorno */
 async function insertCustomer(customer) {
   const client = await connect();
   const sql =
@@ -56,7 +48,6 @@ async function insertCustomer(customer) {
   ]);
 }
 
-/*atualizando os dados de um cliente; só para testar, vou atualizar os dados do cliente de id: 4 */
 async function updateCustomer(id, customer) {
   const client = await connect();
   const sql =
@@ -72,7 +63,6 @@ async function updateCustomer(id, customer) {
   await client.query(sql, values);
 }
 
-/*excluindo um cliente; só para testar, vou apagar os dados do cliente de id: 5*/
 async function deleteCustomer(id) {
   const client = await connect();
   const sql = "DELETE FROM customers WHERE customer_id=$1";
